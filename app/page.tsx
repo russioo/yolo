@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
 import { Volume2, VolumeX } from "lucide-react"
+import Link from "next/link"
 
 export default function HomePage() {
   const [currentTime, setCurrentTime] = useState("")
@@ -42,9 +43,15 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen w-full bg-background flex flex-col items-center justify-center p-6 relative">
-      {/* Clock in top right */}
-      <div className="absolute top-8 right-8 text-2xl font-light tracking-wider text-muted-foreground">
-        {currentTime}
+      {/* Header with meme generator and clock */}
+      <div className="absolute top-8 right-8 flex items-center gap-4">
+        <Link
+          href="/meme"
+          className="px-6 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold tracking-[0.05em] uppercase transition-colors text-sm"
+        >
+          Meme
+        </Link>
+        <div className="text-2xl font-light tracking-wider text-muted-foreground">{currentTime}</div>
       </div>
 
       {/* Text above video */}
