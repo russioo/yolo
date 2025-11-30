@@ -12,24 +12,63 @@ export default function MemePage() {
   const [loading, setLoading] = useState(false)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setSelectedFile(file)
+      setPreviewUrl(URL.createObjectURL(file))
+    }
+  }
 
   const handleGenerate = async () => {
-    if (!prompt.trim()) return
+    if (!prompt.trim()) {
+      setError("Please enter a prompt")
+      return
+    }
+
+    if (!selectedFile) {
+      setError("Please upload an image")
+      return
+    }
 
     setLoading(true)
     setError(null)
     setGeneratedImage(null)
 
     try {
-      const response = await fetch("/api/generate-meme", {
+      // Upload to imgbb first
+      const formData = new FormData()
+      formData.append("image", selectedFile)
+
+      const response = await fetch("/api/upload-image", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+        body: formData,
       })
 
-      const data = await response.json()
+      const uploadData = await response.json()
 
       if (!response.ok) {
+        throw new Error(uploadData.error || "Failed to upload image")
+      }
+
+      const imageUrl = uploadData.url
+
+      // Now generate meme
+      const generateResponse = await fetch("/api/generate-meme", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          prompt,
+          imageUrl 
+        }),
+      })
+
+      const data = await generateResponse.json()
+
+      if (!generateResponse.ok) {
         throw new Error(data.error || "Generation failed")
       }
 
@@ -98,8 +137,45 @@ export default function MemePage() {
         {/* Generator form */}
         <div className="space-y-6">
           <div className="space-y-4">
+            {/* File Upload */}
+            <div className="space-y-3">
+              <label className="text-sm uppercase tracking-wider text-muted-foreground">
+                Upload Your Image
+              </label>
+              <div className="border-2 border-dashed border-primary/20 rounded-lg p-8 text-center hover:border-primary/40 transition-colors cursor-pointer">
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleFileChange}
+                  disabled={loading}
+                  className="hidden"
+                  id="file-upload"
+                />
+                <label htmlFor="file-upload" className="cursor-pointer">
+                  {previewUrl ? (
+                    <div className="flex flex-col items-center gap-3">
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-48 h-48 object-cover rounded-lg border-2 border-primary/20"
+                      />
+                      <p className="text-sm text-muted-foreground">Click to change image</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-3 py-8">
+                      <div className="text-4xl">📸</div>
+                      <div>
+                        <p className="text-lg font-semibold">Click to upload</p>
+                        <p className="text-sm text-muted-foreground">PNG, JPG, WEBP (max 30MB)</p>
+                      </div>
+                    </div>
+                  )}
+                </label>
+              </div>
+            </div>
+
             <Input
-              placeholder="Describe your meme... (e.g., 'wearing sunglasses at a party')"
+              placeholder="Describe your meme... (e.g., 'sitting in a porsche')"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && !loading && handleGenerate()}

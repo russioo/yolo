@@ -62,10 +62,10 @@ export default function HomePage() {
         <p className="text-2xl md:text-3xl font-light tracking-[0.2em] text-foreground">YOU ONLY LIVE ONCE</p>
       </div>
 
-      <div className="w-full max-w-5xl relative group">
+      <div className="w-full max-w-7xl relative group">
         <video
           ref={videoRef}
-          className="w-full aspect-video bg-black cursor-pointer"
+          className="w-full aspect-video bg-black cursor-pointer rounded-lg shadow-2xl"
           onClick={togglePlay}
           autoPlay
           loop
@@ -79,16 +79,11 @@ export default function HomePage() {
         {/* Mute button overlay */}
         <button
           onClick={toggleMute}
-          className="absolute bottom-6 right-6 bg-black/50 hover:bg-black/70 p-3 transition-colors"
+          className="absolute bottom-6 right-6 bg-primary/80 hover:bg-primary p-4 rounded-lg transition-all shadow-lg"
           aria-label={isMuted ? "Unmute" : "Mute"}
         >
-          {isMuted ? <VolumeX className="w-6 h-6 text-white" /> : <Volume2 className="w-6 h-6 text-white" />}
+          {isMuted ? <VolumeX className="w-6 h-6 text-black" /> : <Volume2 className="w-6 h-6 text-black" />}
         </button>
-      </div>
-
-      {/* Wallet address */}
-      <div className="mt-6 text-sm text-muted-foreground/50 font-mono">
-        CA: 2LkVadXoNgk1y3tHRvzebRukagHXnN7qgs9WeYEtdtPt
       </div>
 
       {/* Community link */}

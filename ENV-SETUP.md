@@ -1,51 +1,38 @@
 # Environment Variables Setup
 
-## Step 1: Upload Template to Imgur
-
-1. Go to https://imgur.com/upload
-2. Upload `public/template.png`
-3. Click on the uploaded image
-4. Right-click → "Copy image address"
-5. You'll get a URL like: `https://i.imgur.com/abc123.png`
-
-## Step 2: Create Environment Variables
-
 Create a `.env.local` file in the root of your project:
 
 ```bash
 # KIE.AI API Key (REQUIRED)
 KIE_AI_API_KEY=your_api_key_here
-
-# Template Image URL (REQUIRED)
-# Use the direct Imgur image URL (must end with .png/.jpg)
-TEMPLATE_IMAGE_URL=https://i.imgur.com/your-image.png
 ```
 
-**Important:** Make sure to use the DIRECT image URL (ending with .png), not the Imgur page URL!
+**That's it!** No need to upload template images anywhere - users upload their own reference images directly in the app!
 
-## Step 3: Local Development
+## Local Development
 
-1. Make sure you have both environment variables in `.env.local`
+1. Add your API key to `.env.local`
 2. Run `npm run dev`
 3. Go to http://localhost:3000/meme
-4. Test meme generation!
+4. Upload your reference image
+5. Enter a prompt
+6. Generate memes!
 
-## Step 4: Production Deployment
+## Production Deployment
 
-Add BOTH environment variables to your hosting platform:
+Add environment variable to your hosting platform:
 - `KIE_AI_API_KEY` = your KIE.AI API key
-- `TEMPLATE_IMAGE_URL` = your Imgur direct image URL
 
 Then deploy!
 
 ## How It Works
 
-1. User enters meme prompt
-2. Backend uses `fileUrl` parameter with your Imgur template URL
-3. KIE.AI generates meme based on template + prompt
+1. User uploads their own reference image
+2. Image is uploaded to KIE.AI file storage
+3. Meme is generated with the uploaded image + user's prompt
 4. User downloads the generated meme!
 
-Simple and reliable! ✅
+**No manual hosting or template setup required!** ✅
 
 ## Get KIE.AI API Key
 
