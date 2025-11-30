@@ -11,17 +11,18 @@
    Opret en `.env.local` fil i projektets rod:
    ```bash
    KIE_AI_API_KEY=din_api_key_her
-   NEXT_PUBLIC_BASE_URL=https://din-deployment-url.vercel.app
+   TEMPLATE_IMAGE_URL=https://din-image-url.com/mascot.png
    ```
 
 3. **YOLO Mascot Template**
-   - Template billede: `public/template.png`
-   - This image is used as the base for all meme generations
-   - Replace with your own YOLO mascot if needed (JPG, PNG, WEBP formats supported)
+   - Upload dit YOLO mascot billede til en hosting service (f.eks. imgbb.com, imgur.com)
+   - Tilføj URL'en til `TEMPLATE_IMAGE_URL` i `.env.local`
+   - Dette billede bruges som base for alle meme genereringer
+   - Understøttede formater: JPG, PNG, WEBP
 
 4. **Deploy til Vercel**
    - Tilføj `KIE_AI_API_KEY` som environment variable i Vercel dashboard
-   - Tilføj `NEXT_PUBLIC_BASE_URL` med din Vercel URL
+   - Tilføj `TEMPLATE_IMAGE_URL` med URL til dit mascot billede
 
 ## Brug
 

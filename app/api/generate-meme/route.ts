@@ -2,32 +2,33 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function POST(request: NextRequest) {
   try {
-    const { prompt, imageUrl } = await request.json()
+    const { prompt } = await request.json()
 
     if (!prompt) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 })
     }
 
-    if (!imageUrl) {
-      return NextResponse.json({ error: "Image URL is required" }, { status: 400 })
-    }
-
     const apiKey = process.env.KIE_AI_API_KEY
+    const templateImageUrl = process.env.TEMPLATE_IMAGE_URL
 
     console.log("API Key exists:", !!apiKey)
-    console.log("Image URL:", imageUrl)
+    console.log("Template Image URL:", templateImageUrl)
     console.log("Prompt:", prompt)
 
     if (!apiKey) {
       return NextResponse.json({ error: "KIE_AI_API_KEY not configured" }, { status: 500 })
     }
 
-    // Generate meme with user's image URL
+    if (!templateImageUrl) {
+      return NextResponse.json({ error: "TEMPLATE_IMAGE_URL not configured" }, { status: 500 })
+    }
+
+    // Generate meme with template image URL
     const requestBody = {
       model: "nano-banana-pro",
       input: {
         prompt: prompt,
-        image_input: [imageUrl],
+        image_input: [templateImageUrl],
         aspect_ratio: "1:1",
         resolution: "1K",
         output_format: "png",

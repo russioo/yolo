@@ -5,34 +5,37 @@ Create a `.env.local` file in the root of your project:
 ```bash
 # KIE.AI API Key (REQUIRED)
 KIE_AI_API_KEY=your_api_key_here
-```
 
-**That's it!** No need to upload template images anywhere - users upload their own reference images directly in the app!
+# Template Image URL (REQUIRED)
+# This is the mascot/character image that will be used for all meme generations
+TEMPLATE_IMAGE_URL=https://your-image-url.com/template.png
+```
 
 ## Local Development
 
 1. Add your API key to `.env.local`
-2. Run `npm run dev`
-3. Go to http://localhost:3000/meme
-4. Upload your reference image
-5. Enter a prompt
+2. Add the template image URL (your YOLO mascot image)
+3. Run `npm run dev`
+4. Go to http://localhost:3000/meme
+5. Enter a prompt (e.g., "sitting in a porsche")
 6. Generate memes!
 
 ## Production Deployment
 
-Add environment variable to your hosting platform:
+Add environment variables to your hosting platform:
 - `KIE_AI_API_KEY` = your KIE.AI API key
+- `TEMPLATE_IMAGE_URL` = URL to your template mascot image
 
 Then deploy!
 
 ## How It Works
 
-1. User uploads their own reference image
-2. Image is uploaded to KIE.AI file storage
-3. Meme is generated with the uploaded image + user's prompt
+1. User enters a prompt describing what they want the mascot to do
+2. The system uses the TEMPLATE_IMAGE_URL (your mascot) for all generations
+3. Meme is generated with the template image + user's prompt
 4. User downloads the generated meme!
 
-**No manual hosting or template setup required!** ✅
+**All memes use the same template character!** ✅
 
 ## Get KIE.AI API Key
 
