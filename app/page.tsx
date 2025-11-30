@@ -86,11 +86,6 @@ export default function HomePage() {
         </button>
       </div>
 
-      {/* Wallet address */}
-      <div className="mt-6 text-sm text-muted-foreground/50 font-mono">
-        CA: CpeV8zFSVd26JJZPbjyGRx2x32jW1mg8WsgsXigjpump
-      </div>
-
       {/* Community link */}
       <a
         href="https://x.com/i/communities/1995236017134301231"
