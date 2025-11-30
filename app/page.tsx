@@ -88,7 +88,7 @@ export default function HomePage() {
 
       {/* Community link */}
       <a
-        href="https://x.com/i/communities/1994577905771540895"
+        href="https://x.com/i/communities/1995236017134301231"
         target="_blank"
         rel="noopener noreferrer"
         className="mt-12 bg-primary hover:bg-primary/90 text-primary-foreground px-10 py-4 font-semibold tracking-[0.1em] uppercase transition-colors"
